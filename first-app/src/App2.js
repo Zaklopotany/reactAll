@@ -31,7 +31,7 @@ class App extends Component {
             ]
         })
     };
-    //change second
+    //change second third
     //fetch all people xD
     deletePersonHandler = (personIndex) => {
         //this creates reference to original object to avoid this we can use slice()
