@@ -1,7 +1,9 @@
 // @flow/
 import React, {Component} from 'react';
 import classes from './Person.css';
-import WithClasses from '../../../hoc/WithClass';
+import WithClass from '../../../hoc/WithClass';
+import withClass1 from '../../../hoc/withClass1';
+import Aux from '../../../hoc/Aux';
 
 class Person extends Component {
 
@@ -22,13 +24,14 @@ class Person extends Component {
         console.log('[Person.js] inside render()');
 
         return (
-            <WithClasses classes={classes.Person}>
+
+            <Aux>
                 <p onClick={this.props.click}>Ima lazy af {this.props.name} and I am {this.props.age} years old </p>
                 <p>{this.props.children}</p>
                 <input type="text" onChange={this.props.changed} value={this.props.name}/>
-            </WithClasses>
+            </Aux>
         );
     };
 }
 
-export default Person;
+export default withClass1(Person, classes.Person);

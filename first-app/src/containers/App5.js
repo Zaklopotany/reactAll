@@ -4,6 +4,8 @@ import React, {PureComponent} from 'react';
 import cssClasses from './App2.css';
 import Cockpit from '../components/Cockpit/Cockpit5';
 import WithClass from '../hoc/WithClass';
+import Aux from '../hoc/Aux';
+import withClass1 from '../hoc/withClass1';
 
 import Persons from '../components/Persons/Persons5';
 
@@ -96,7 +98,18 @@ class App extends PureComponent {
         }
 
         return (
-            //auxiliary component wrapping content
+            <Aux>
+                <button onClick={() => {this.setState({showPerson: true})}}>show persons</button>
+                <Cockpit
+                    persons={this.state.persons}
+                    showPersons={this.state.showPerson}
+                    toggled={this.togglePersonHandler}
+                />
+                {persons}
+            </Aux>
+
+
+       /*     //auxiliary component wrapping content
             <WithClass classes={cssClasses.App}>
                 <button onClick={() => {this.setState({showPerson: true})}}>show persons</button>
                 <Cockpit
@@ -107,10 +120,13 @@ class App extends PureComponent {
                 {persons}
 
             </WithClass>
+*/
+
+
 
         );
     }
 }
 
 
-export default App;
+export default withClass1(App, cssClasses.App);
