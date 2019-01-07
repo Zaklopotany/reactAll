@@ -1,4 +1,4 @@
-// @flow
+// @flow/
 import React, {Component} from 'react';
 import classes from './Person.css';
 import WithClasses from '../../../hoc/WithClass';
