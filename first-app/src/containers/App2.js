@@ -1,14 +1,17 @@
 // @flow
 import React, {Component} from 'react';
-import './App.css';
+//bacause we use modules configuration in webapacks we can now import css lika a module and use it as variable
+//everywhere in the file
+import cssClasses from './App2.css';
 //radium import inline styles and
 //styleroot special component if we want to use media queries we need to wrap all content with this component
-//it won't work without this : (
+//it won't work without this : (        //aktualizacja macierzy oryginalnej przy pomocy macierzy utworzonej
 // import Radium, {StyleRoot} from 'radium';
 //always capital letter in imports all components.
 
-import Person from './Person/Person';
+import Person from '../components/Persons/Person/Person';
 
+import ErrorBoundry from '../components/ErrorBoundry/ErrorBoundry';
 
 class App extends Component {
     state = {
@@ -58,7 +61,7 @@ class App extends Component {
                 ...this.state.persons[personIndex]
             };
 
-        //modyfikacja utworzonej kopi person
+        //modyfikacja utworzonej kopii person
         person.name = event.target.value;
         //utworzenie kopii macierzy persons
         const persons = [...this.state.persons];
@@ -79,25 +82,26 @@ class App extends Component {
 
 
     render() {
-        const style = {
+        /*const style = {
             backgroundColor: 'green',
             color: 'white',
             font: 'inherit',
             border: '1x solid blue',
             padding: '8px',
             cursor: 'pointer',
-            /*':hover': {
+            /!*':hover': {
                 backgroundColor: 'lightgreen',
                 color: 'black'
-            }*/
-        };
+            }*!/
+        };*/
 
+        let btnClass = '';
         let classes = [];
         if (this.state.persons.length <= 2) {
-            classes.push('red');
+            classes.push(cssClasses.red);
         }
         if (this.state.persons.length <= 1) {
-            classes.push('bold');
+            classes.push(cssClasses.bold);
         }
 
         let persons = null;
@@ -105,30 +109,32 @@ class App extends Component {
             persons = (
                 <div>
                     {this.state.persons.map((person, index) => {
-                        return <Person
-                            click={() => this.deletePersonHandler(index)}
-                            changed={(event) => this.nameChangeHandler(event, person.id)}
-                            name={person.name}
-                            age={person.age}
-                            key={person.id}
-                        />
+                        return <ErrorBoundry key={person.id}>
+                            <Person
+                                click={() => this.deletePersonHandler(index)}
+                                changed={(event) => this.nameChangeHandler(event, person.id)}
+                                name={person.name}
+                                age={person.age}
+                            />
+                        </ErrorBoundry>
                     })}
                 </div>
             );
-            style.backgroundColor = 'red';
+            btnClass = cssClasses.Red;
+            // style.backgroundColor = 'red';
             /*style[':hover'] = {
                 backgroundColor: 'salmon',
                 color: 'black'
             }*/
         }
-
         return (
             //<StyleRoot>
-            <div className='App'>
+            <div className={cssClasses.App}>
                 <h1> This is react app</h1>
                 <p className={classes.join(' ')}> this is working</p>
                 <button
-                    style={style}
+                    className={btnClass}
+                    /*style={style}*/
                     onClick={this.togglePersonHandler}>Toggle Persons
                 </button>
                 {persons}

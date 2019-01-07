@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import './App.css';
 //always capital letter in imports all components.
 
-import Person from './Person/Person';
+import Person from './components/Person/Person';
 
 
 class App extends Component {
