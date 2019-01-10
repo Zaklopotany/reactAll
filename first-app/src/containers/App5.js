@@ -26,12 +26,13 @@ class App extends PureComponent {
 
     state = {
         persons: [
-            {id: '1231', name: "MAX", age: 26},
+            {id: '1231', name: "MAX", age: 123},
             {id: '12asdf', name: "Manu", age: 23},
             {id: '1dfs31', name: "kill", age: 11}
         ],
         otherState: 'someValues',
-        showPerson: false
+        showPerson: false,
+        toggleClickCounter: 0
     };
 
     //The same as in Persons4
@@ -79,7 +80,14 @@ class App extends PureComponent {
 
     togglePersonHandler = () => {
         const doesShow = this.state.showPerson;
-        this.setState({showPerson: !doesShow});
+        //setState is executed asynchronously
+        //if we want to directly update the value without creating the
+        this.setState((prevState, props) => {
+            return {
+                showPerson: !doesShow,
+                toggleClickCounter: prevState.toggleClickCounter + 1
+            }
+        });
 
     }
 
@@ -99,7 +107,10 @@ class App extends PureComponent {
 
         return (
             <Aux>
-                <button onClick={() => {this.setState({showPerson: true})}}>show persons</button>
+                <button onClick={() => {
+                    this.setState({showPerson: true})
+                }}>show persons
+                </button>
                 <Cockpit
                     persons={this.state.persons}
                     showPersons={this.state.showPerson}
@@ -109,19 +120,18 @@ class App extends PureComponent {
             </Aux>
 
 
-       /*     //auxiliary component wrapping content
-            <WithClass classes={cssClasses.App}>
-                <button onClick={() => {this.setState({showPerson: true})}}>show persons</button>
-                <Cockpit
-                    persons={this.state.persons}
-                    showPersons={this.state.showPerson}
-                    toggled={this.togglePersonHandler}
-                />
-                {persons}
+            /*     //auxiliary component wrapping content
+                 <WithClass classes={cssClasses.App}>
+                     <button onClick={() => {this.setState({showPerson: true})}}>show persons</button>
+                     <Cockpit
+                         persons={this.state.persons}
+                         showPersons={this.state.showPerson}
+                         toggled={this.togglePersonHandler}
+                     />
+                     {persons}
 
-            </WithClass>
-*/
-
+                 </WithClass>
+     */
 
 
         );
